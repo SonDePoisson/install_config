@@ -13,6 +13,8 @@ Ce script installe et configure automatiquement :
 - **Oh My Zsh** - Framework de configuration pour zsh (avec thème `af-magic`)
 - **uv** - Gestionnaire de packages et environnements Python rapide
 
+Le script crée également un dossier `~/Code` pour organiser vos projets.
+
 ## Utilisation
 
 ```bash

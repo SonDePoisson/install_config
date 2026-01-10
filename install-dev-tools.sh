@@ -113,6 +113,16 @@ if [[ $REPLY =~ ^[OoYy]$ ]]; then
     fi
 fi
 
+# Création du dossier ~/Code
+echo ""
+echo "📁 Création du dossier ~/Code..."
+if [ ! -d "$HOME/Code" ]; then
+    mkdir -p "$HOME/Code"
+    echo "✅ Dossier ~/Code créé"
+else
+    echo "✅ Dossier ~/Code déjà existant"
+fi
+
 echo ""
 echo "🎉 Installation terminée !"
 echo ""
@@ -123,6 +133,7 @@ echo "  - git: $(which git)"
 echo "  - tailscale: $(which tailscale 2>/dev/null || echo 'Redémarrez votre terminal')"
 echo "  - Oh My Zsh: ~/.oh-my-zsh (thème: af-magic)"
 echo "  - uv: $(which uv 2>/dev/null || echo 'Redémarrez votre terminal pour utiliser uv')"
+echo "  - Dossier ~/Code créé pour vos projets"
 echo ""
 echo "Pour commencer à utiliser zsh, exécutez: zsh"
 echo "Pour démarrer Tailscale, exécutez: sudo tailscale up"
