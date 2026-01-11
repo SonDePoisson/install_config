@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Script d'installation des outils de développement
-# Installe: zsh, curl, git, Tailscale, Oh My Zsh (thème af-magic), uv
+# Installe: zsh, curl, git, Tailscale, Oh My Zsh (thème af-magic), uv, Neovim
+# Configure: Git global (sondepoisson), Neovim config
 
 set -e  # Arrêter en cas d'erreur
 
@@ -63,6 +64,13 @@ fi
 echo ""
 echo "✅ zsh, curl, git, tailscale installés"
 
+# Configuration Git globale
+echo ""
+echo "🔧 Configuration de Git..."
+git config --global user.name "sondepoisson"
+git config --global user.email "clement.poissoncornu@gmail.com"
+echo "✅ Git configuré (user: sondepoisson, email: clement.poissoncornu@gmail.com)"
+
 # Installation de Oh My Zsh
 echo ""
 echo "📦 Installation de Oh My Zsh..."
@@ -99,6 +107,32 @@ else
     echo "✅ uv déjà installé"
 fi
 
+# Installation de Neovim
+echo ""
+echo "📦 Installation de Neovim..."
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install neovim
+elif command -v apt-get &> /dev/null; then
+    sudo apt-get install -y neovim
+elif command -v yum &> /dev/null; then
+    sudo yum install -y neovim
+elif command -v pacman &> /dev/null; then
+    sudo pacman -Sy --noconfirm neovim
+fi
+echo "✅ Neovim installé"
+
+# Installation de la configuration Neovim
+echo ""
+echo "📦 Installation de la configuration Neovim..."
+NVIM_CONFIG_DIR="$HOME/.config/nvim"
+if [ -d "$NVIM_CONFIG_DIR" ]; then
+    echo "⚠️  Configuration Neovim existante détectée, sauvegarde..."
+    mv "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.backup.$(date +%Y%m%d%H%M%S)"
+fi
+mkdir -p "$HOME/.config"
+git clone https://github.com/SonDePoisson/NeoVim-Config.git "$NVIM_CONFIG_DIR"
+echo "✅ Configuration Neovim installée"
+
 # Configuration du shell par défaut
 echo ""
 read -p "Voulez-vous définir zsh comme shell par défaut ? (o/n) " -n 1 -r
@@ -129,10 +163,12 @@ echo ""
 echo "Outils installés:"
 echo "  - zsh: $(which zsh)"
 echo "  - curl: $(which curl)"
-echo "  - git: $(which git)"
+echo "  - git: $(which git) (user: sondepoisson)"
 echo "  - tailscale: $(which tailscale 2>/dev/null || echo 'Redémarrez votre terminal')"
 echo "  - Oh My Zsh: ~/.oh-my-zsh (thème: af-magic)"
 echo "  - uv: $(which uv 2>/dev/null || echo 'Redémarrez votre terminal pour utiliser uv')"
+echo "  - neovim: $(which nvim 2>/dev/null || echo 'Redémarrez votre terminal')"
+echo "  - Config Neovim: ~/.config/nvim"
 echo "  - Dossier ~/Code créé pour vos projets"
 echo ""
 echo "Pour commencer à utiliser zsh, exécutez: zsh"
