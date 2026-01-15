@@ -130,7 +130,7 @@ if [ -d "$NVIM_CONFIG_DIR" ]; then
     mv "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.backup.$(date +%Y%m%d%H%M%S)"
 fi
 mkdir -p "$HOME/.config"
-git clone https://github.com/SonDePoisson/NeoVim-Config.git "$NVIM_CONFIG_DIR"
+git clone https://github.com/SonDePoisson/kickstart.nvim.git "$NVIM_CONFIG_DIR"
 echo "✅ Configuration Neovim installée"
 
 # Configuration du shell par défaut
